@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "meeting-assistant-sse": {
-      "command": "C:/Users/Arnold/Desktop/Kurs/.venv/Scripts/python.exe",
-      "args": ["C:/Users/Arnold/Desktop/Kurs/server.py"],
+      "command": "C:/projects/Mini-MCP/.venv/Scripts/python.exe",
+      "args": ["C:/projects/Mini-MCP/server.py"],
       "env": {
         "TRANSPORT": "sse",
         "HOST": "localhost",
