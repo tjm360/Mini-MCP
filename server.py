@@ -1,14 +1,9 @@
-from mcp.server.fastmcp import FastMCP, Context
+from mcp.server import MCPServer
 import os
-import asyncio
 from pathlib import Path
 
 # MCP-Server initialisieren
-mcp = FastMCP(
-    "Taschenrechner",
-    host=os.getenv("HOST", "localhost"),
-    port=int(os.getenv("PORT", "3000"))
-)
+mcp = MCPServer("Taschenrechner")
 
 # Tool: Addition
 @mcp.tool()
@@ -55,14 +50,13 @@ def meeting_prompt(meeting_date: str, meeting_title: str, transcript: str) -> st
     result = result.replace("{{ transcript }}", transcript)
     return result
 
-async def main():
-    transport = os.getenv("TRANSPORT", "stdio")
-    if transport == 'sse':
-        # Run the MCP server with sse transport
-        await mcp.run_sse_async()
-    else:
-        # Run the MCP server with stdio transport
-        await mcp.run_stdio_async()
-
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    transport = os.getenv("TRANSPORT", "stdio")
+    if transport == "sse":
+        mcp.run(
+            transport="sse",
+            host=os.getenv("HOST", "127.0.0.1"),
+            port=int(os.getenv("PORT", "3000")),
+        )
+    else:
+        mcp.run()
